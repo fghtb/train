@@ -1,0 +1,13 @@
+第018代研究候选：市场状态与流动性冲击
+
+研究依据：第010代流动性冲击综合得分最高，第012代市场状态具有较高ICIR和较低换手。本代检验市场共同状态是否能调节个股的价格冲击和流动性脆弱程度。
+
+金融逻辑：market_median_return表示市场共同方向；market_breadth表示行情扩散；market_dispersion表示横截面分化；market_relative_volatility表示个股相对风险；true_range_pct、atr_20和range_shock表示价格冲击及其异常程度；amihud_20和amihud_20_rank表示持续流动性冲击及个股相对脆弱性。
+
+特征：flag_limit_up、flag_limit_down、market_median_return、market_breadth、market_dispersion、market_relative_volatility、true_range_pct、atr_20、range_shock、amihud_20、amihud_20_rank。
+
+主动剔除：隔夜方向、下行回撤、日内形态、价格路径和收益自相关特征，避免把方向机制、压力机制和形态机制全部堆入一个模型。
+
+目标：寻找兼顾Rank IC、年化超额收益、综合得分、跨年份稳定性和换手率的市场状态流动性模型。
+
+数据：只使用题目训练集和测试集；所有派生量只使用当前及历史记录；测试集只生成预测。

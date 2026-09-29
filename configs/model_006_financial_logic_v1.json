@@ -1,0 +1,153 @@
+{
+  "model_name": "model_006_financial_logic_v1",
+  "confirmation_token": "CONFIRM_MODEL_006_FINANCIAL_LOGIC",
+  "feature_mode": "technical_momentum_skip",
+  "optimization_plan": {
+    "plan": "金融逻辑优先：先隔离原Top10中缺少原始金融说明的九项，并使用事先登记的24项中期、参与度与风险特征。",
+    "change": "只使用已有特征，不新增文档中的乘积或哑变量；相对003剔除26个候选输入，超参数保持一致；新训练采用已约定的三折滚动协议。",
+    "next": "检验三折Rank IC、ICIR、换手率及成本后IR；2024仅作诊断。金融假设不是因果证据，不能预先承诺换手下降。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  },
+  "evaluation": {
+    "method": "expanding_walk_forward",
+    "protocol_id": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "folds": [
+      {
+        "name": "fold_2021",
+        "fit_start": 20180102,
+        "inner_fit_end": 20200630,
+        "early_stop_start": 20200701,
+        "early_stop_end": 20201231,
+        "refit_end": 20201231,
+        "assessment_start": 20210101,
+        "assessment_end": 20211231
+      },
+      {
+        "name": "fold_2022",
+        "fit_start": 20180102,
+        "inner_fit_end": 20210630,
+        "early_stop_start": 20210701,
+        "early_stop_end": 20211231,
+        "refit_end": 20211231,
+        "assessment_start": 20220101,
+        "assessment_end": 20221231
+      },
+      {
+        "name": "fold_2023",
+        "fit_start": 20180102,
+        "inner_fit_end": 20220630,
+        "early_stop_start": 20220701,
+        "early_stop_end": 20221231,
+        "refit_end": 20221231,
+        "assessment_start": 20230101,
+        "assessment_end": 20231231
+      }
+    ],
+    "early_stopping_rounds": 100,
+    "label_horizon_trading_days": 1,
+    "boundary_policy": "label_date_before_next_stage",
+    "final_rounds_rule": "median_inner_best_iteration",
+    "final_comparison_year": 2024,
+    "max_model_fits": 7,
+    "test_usage": "prediction_only_after_cv_and_2024_assessment"
+  },
+  "financial_logic": {
+    "version": "FINANCIAL_LOGIC_FIRST_V1",
+    "registry_fingerprint": "f4e3bd78bb65171136290c18954a72ad2d236cd2f44bf8817a166075895077a2",
+    "allowed_features": [
+      "flag_limit_up",
+      "flag_limit_down",
+      "volatility_20",
+      "ma_gap_20",
+      "ret_60",
+      "volatility_60",
+      "ma_gap_60",
+      "vol_ratio_20",
+      "amount_ratio_20",
+      "ret_120",
+      "ret_240",
+      "ret_20_skip5",
+      "ret_60_skip5",
+      "ret_120_skip5",
+      "ret_240_skip5",
+      "volatility_20_rank",
+      "amount_ratio_20_rank",
+      "ret_60_rank",
+      "ret_120_rank",
+      "ret_240_rank",
+      "ret_20_skip5_rank",
+      "ret_60_skip5_rank",
+      "ret_120_skip5_rank",
+      "ret_240_skip5_rank"
+    ],
+    "excluded_features": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "vol",
+      "amount",
+      "oc_return",
+      "hl_range",
+      "close_position",
+      "amount_per_vol",
+      "ret_1",
+      "ret_3",
+      "volatility_3",
+      "ma_gap_3",
+      "ret_5",
+      "volatility_5",
+      "ma_gap_5",
+      "ret_10",
+      "volatility_10",
+      "ma_gap_10",
+      "ret_20",
+      "vol_ratio_5",
+      "amount_ratio_5",
+      "ret_1_rank",
+      "ret_5_rank",
+      "ret_20_rank"
+    ],
+    "display_logic_before_confirmation": true
+  },
+  "comparison_plan": {
+    "historical_reference": "model_003_momentum_skip",
+    "reference_protocol": "legacy_fixed_split_v1",
+    "candidate_protocol": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "interpretation": "旧003与新候选的特征和评估流程均不同；仅作历史背景对照，不能把全部指标变化归因于删特征。同协议对照候选须另行登记金融逻辑并确认。",
+    "actual_new_results": "pending_explicit_confirmation"
+  }
+}

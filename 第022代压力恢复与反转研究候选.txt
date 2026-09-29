@@ -1,0 +1,4 @@
+第022代研究候选：压力恢复与反转
+第017代收益和2024诊断较好但换手高。本代研究市场压力状态下个股从近期低点恢复的条件收益。
+特征：涨跌停标记、market_median_return、market_breadth、downside_vol_20、downside_freq_20、drawdown_20、recovery_from_low_20、pressure_recovery_alignment。
+恢复特征表示价格相对20期低点的修复程度，交互项检验逆势承接。主动剔除流动性冲击、隔夜方向和价格形态。只使用题目数据。

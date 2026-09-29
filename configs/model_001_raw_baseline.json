@@ -1,0 +1,44 @@
+{
+  "model_name": "model_001_raw_baseline",
+  "confirmation_token": "CONFIRM_MODEL_001",
+  "feature_mode": "raw",
+  "optimization_plan": {
+    "plan": "建立可复现的原始字段基线，固定时间切分、早停和参数，作为后续各代的唯一对照。",
+    "change": "只使用题目提供的原始字段，不加入手工技术特征。",
+    "next": "在保持模型参数不变的情况下增加少量、可解释的历史技术特征。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  }
+}

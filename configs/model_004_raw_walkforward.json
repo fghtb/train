@@ -1,0 +1,87 @@
+{
+  "model_name": "model_004_raw_walkforward",
+  "confirmation_token": "CONFIRM_MODEL_004_WALKFORWARD",
+  "feature_mode": "raw",
+  "optimization_plan": {
+    "plan": "在相同扩展窗口和隔离早停流程下重新建立基准，避免只看2024单年成绩。",
+    "change": "只改变评估训练流程；特征模式和LightGBM超参数沿用对应旧代。",
+    "next": "先比较三折官方综合得分均值、最差折和分期稳定性，再查看2024诊断结果；不根据测试标签选模型。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  },
+  "evaluation": {
+    "method": "expanding_walk_forward",
+    "protocol_id": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "folds": [
+      {
+        "name": "fold_2021",
+        "fit_start": 20180102,
+        "inner_fit_end": 20200630,
+        "early_stop_start": 20200701,
+        "early_stop_end": 20201231,
+        "refit_end": 20201231,
+        "assessment_start": 20210101,
+        "assessment_end": 20211231
+      },
+      {
+        "name": "fold_2022",
+        "fit_start": 20180102,
+        "inner_fit_end": 20210630,
+        "early_stop_start": 20210701,
+        "early_stop_end": 20211231,
+        "refit_end": 20211231,
+        "assessment_start": 20220101,
+        "assessment_end": 20221231
+      },
+      {
+        "name": "fold_2023",
+        "fit_start": 20180102,
+        "inner_fit_end": 20220630,
+        "early_stop_start": 20220701,
+        "early_stop_end": 20221231,
+        "refit_end": 20221231,
+        "assessment_start": 20230101,
+        "assessment_end": 20231231
+      }
+    ],
+    "early_stopping_rounds": 100,
+    "label_horizon_trading_days": 1,
+    "boundary_policy": "label_date_before_next_stage",
+    "final_rounds_rule": "median_inner_best_iteration",
+    "final_comparison_year": 2024,
+    "max_model_fits": 7,
+    "test_usage": "prediction_only_after_cv_and_2024_assessment"
+  }
+}

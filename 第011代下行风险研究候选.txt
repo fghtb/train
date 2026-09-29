@@ -1,0 +1,4 @@
+第011代下行风险与回撤状态研究候选
+研究逻辑：使用下行半方差、负收益频率与滚动回撤，区分损失方向风险、持续卖压和被套状态。
+特征：downside_vol_20、downside_freq_20、drawdown_20、downside_vol_60、downside_freq_60、drawdown_60，以及对应横截面排名和涨跌停标记。
+训练前必须展示全部公式、金融解释、失效风险、LightGBM参数和三折滚动验证协议。收到CONFIRM_MODEL_011_NEW_LOGIC后才训练。

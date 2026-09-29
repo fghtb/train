@@ -1,0 +1,4 @@
+第021代研究候选：压力传导核心
+第020代综合得分接近010且换手低。本代拆分020，检验其优势是否来自市场广度、分化、异常波动和流动性冲击核心。
+特征：涨跌停标记、market_breadth、market_dispersion、true_range_pct、range_shock、amihud_20、amihud_20_rank、downside_freq_20、stress_breadth_alignment、liquidity_stress_gap。
+主动剔除：市场中位数收益、ATR、下行波动、回撤、隔夜方向、日内形态和路径效率。只使用题目数据，测试集只预测。

@@ -1,0 +1,142 @@
+{
+  "model_name": "model_005_technical_walkforward_financial_v1",
+  "confirmation_token": "CONFIRM_MODEL_005_FINANCIAL_LOGIC",
+  "feature_mode": "technical",
+  "optimization_plan": {
+    "plan": "按金融逻辑优先原则修订第005代待训练候选，使用与006相同滚动协议。",
+    "change": "保留原候选超参数；仅保留当前已登记的金融特征。原始候选配置不修改。",
+    "next": "用相同三折历史评估和2024诊断比较004、005、006，报告IC、综合得分、换手及成本后组合结果。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  },
+  "evaluation": {
+    "method": "expanding_walk_forward",
+    "protocol_id": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "folds": [
+      {
+        "name": "fold_2021",
+        "fit_start": 20180102,
+        "inner_fit_end": 20200630,
+        "early_stop_start": 20200701,
+        "early_stop_end": 20201231,
+        "refit_end": 20201231,
+        "assessment_start": 20210101,
+        "assessment_end": 20211231
+      },
+      {
+        "name": "fold_2022",
+        "fit_start": 20180102,
+        "inner_fit_end": 20210630,
+        "early_stop_start": 20210701,
+        "early_stop_end": 20211231,
+        "refit_end": 20211231,
+        "assessment_start": 20220101,
+        "assessment_end": 20221231
+      },
+      {
+        "name": "fold_2023",
+        "fit_start": 20180102,
+        "inner_fit_end": 20220630,
+        "early_stop_start": 20220701,
+        "early_stop_end": 20221231,
+        "refit_end": 20221231,
+        "assessment_start": 20230101,
+        "assessment_end": 20231231
+      }
+    ],
+    "early_stopping_rounds": 100,
+    "label_horizon_trading_days": 1,
+    "boundary_policy": "label_date_before_next_stage",
+    "final_rounds_rule": "median_inner_best_iteration",
+    "final_comparison_year": 2024,
+    "max_model_fits": 7,
+    "test_usage": "prediction_only_after_cv_and_2024_assessment"
+  },
+  "financial_logic": {
+    "version": "FINANCIAL_LOGIC_FIRST_V1",
+    "registry_fingerprint": "f4e3bd78bb65171136290c18954a72ad2d236cd2f44bf8817a166075895077a2",
+    "allowed_features": [
+      "flag_limit_up",
+      "flag_limit_down",
+      "volatility_20",
+      "ma_gap_20",
+      "ret_60",
+      "volatility_60",
+      "ma_gap_60",
+      "vol_ratio_20",
+      "amount_ratio_20",
+      "volatility_20_rank",
+      "amount_ratio_20_rank"
+    ],
+    "excluded_features": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "vol",
+      "amount",
+      "oc_return",
+      "hl_range",
+      "close_position",
+      "amount_per_vol",
+      "ret_1",
+      "ret_3",
+      "volatility_3",
+      "ma_gap_3",
+      "ret_5",
+      "volatility_5",
+      "ma_gap_5",
+      "ret_10",
+      "volatility_10",
+      "ma_gap_10",
+      "ret_20",
+      "vol_ratio_5",
+      "amount_ratio_5",
+      "ret_1_rank",
+      "ret_5_rank",
+      "ret_20_rank"
+    ],
+    "display_logic_before_confirmation": true
+  },
+  "comparison_plan": {
+    "historical_reference": "model_005_technical_walkforward",
+    "interpretation": "本配置是旧待训练候选的金融逻辑修订版，不等同于原始全特征方案。004、005、006在相同时间协议、评分口径及超参数下比较不同输入集；不能把未经训练的旧004、005当成已有成绩。"
+  },
+  "revision_provenance": {
+    "source_config": "D:\\competition\\train\\configs\\model_005_technical_walkforward.json",
+    "source_sha256": "18146ec193fe3c5e8893a1404faae97fb4f05434987ac609ec77d96ec6772b80",
+    "status": "awaiting_financial_logic_and_parameter_confirmation"
+  }
+}

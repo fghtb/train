@@ -1,0 +1,13 @@
+第016代研究候选：隔夜信息与市场状态
+
+研究依据：第009代隔夜信息方向的Rank IC和年化超额收益最高，但2024诊断较弱；第012代市场状态方向ICIR和低换手较好，但收益不足。本代检验市场共同状态是否能解释隔夜信息方向的稳定性变化。
+
+金融逻辑：gap_1表示非交易时段信息到达和开盘重新定价；oc_return表示日内买卖压力；market_median_return表示市场共同方向；market_breadth表示上涨参与范围；market_dispersion表示个股分化程度；residual_return_1表示剔除市场共同波动后的个股表现；residual_momentum_20表示相对市场的中期趋势；market_relative_volatility表示个股风险相对市场分化度。
+
+特征：flag_limit_up、flag_limit_down、gap_1、oc_return、market_median_return、market_breadth、market_dispersion、residual_return_1、residual_momentum_20、market_relative_volatility。
+
+主动剔除：真实波幅和Amihud流动性特征、下行回撤特征、日内形态特征、价格路径特征及其重复横截面排名。原始OHLCV只作为派生计算原料。
+
+目标：在不混入流动性冲击的前提下，检验市场状态是否能提高隔夜方向的跨年份稳定性和2024诊断表现。
+
+数据：只使用题目训练集和测试集；所有派生量只使用当前及历史记录；测试集只生成预测。

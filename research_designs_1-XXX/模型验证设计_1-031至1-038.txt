@@ -1,0 +1,78 @@
+模型验证设计 1-031 至 1-038
+
+用途：验证第020、025、027、030代中表现较好的金融机制，暂不训练，不写入累计报告。
+代号规则：1-031至1-038是研究代号，不替换已有001至030代，不覆盖旧模型。
+
+共同数据和评估协议
+数据目录：D:\competition\赛题五数据
+训练区间：2018-01-02至2023-12-31
+历史滚动验证：2021、2022、2023三折扩展窗口；每折独立早停、重训，合计7次拟合
+诊断区间：2024-01-01至2024-12-31，仅诊断，不参与早停或选轮
+测试区间：2025-01-02至2026-06-08，仅生成预测，不读取未来标签
+模型参数固定：objective=regression，n_estimators=3000，learning_rate=0.03，num_leaves=31，min_child_samples=300，reg_alpha=0.1，reg_lambda=20，colsample_bytree=0.9，subsample=0.9，early_stopping_rounds=100，random_state=42。
+所有特征只能来自题目提供的训练集和测试集字段及其历史滚动计算，不加入外部数据，不使用未来数据。
+
+主要判断口径
+第一依据：三折平均综合得分。
+第二依据：最差折综合得分和三折标准差。
+第三依据：Rank IC、ICIR、年化Top1超额收益和平均换手率。
+2024年结果只作诊断；测试集没有标签，不用于证明模型提升。
+综合得分公式：0.4×Rank IC + 0.3×年化Top1超额收益 + 0.3×(1-平均换手率)。
+
+1-031 方向性冲击去制度标记
+验证目标：检验第027代高分是否主要来自方向性流动性冲击，还是来自涨跌停标记。
+特征：upside_amihud_20、downside_amihud_20、impact_asymmetry_20、downside_impact_share_20。
+对照：第027代。
+判定：若去除涨跌停标记后综合得分、最差折和Rank IC基本保持，说明方向性冲击本身有效；若明显下降，说明制度约束标记不可忽略。
+
+1-032 方向性冲击市场状态
+验证目标：检验方向性流动性冲击是否需要市场环境条件才能发挥作用。
+特征：第027代4项方向性冲击特征，加market_median_return、market_breadth、market_dispersion。
+对照：第027代和第012代。
+判定：重点看综合得分和最差折是否同时提高；若只提高2024诊断而滚动均值不提高，不认定为有效。
+
+1-033 方向性冲击风险调整
+验证目标：检验控制系统性风险和个股残差风险后，方向性卖压是否仍有独立信息。
+特征：第027代4项方向性冲击特征，加market_beta_60、idiosyncratic_volatility_20、idiosyncratic_momentum_20。
+对照：第027代和第030代。
+判定：优先看Rank IC、ICIR和最差折；若综合得分略降但ICIR明显提高且换手下降，可作为稳健候选，不直接淘汰。
+
+1-034 市场压力传导精简
+验证目标：拆分第020代，检验压力交互是否有效，以及真实波幅和ATR是否只是冗余变量。
+特征：market_breadth、market_dispersion、downside_freq_20、amihud_20、stress_breadth_alignment、liquidity_stress_gap。
+对照：第020代。
+判定：若精简后综合得分和最差折不降，说明压力交互是核心；若换手下降而IC保持，优先保留精简版。
+
+1-035 广度分化与方向性冲击
+验证目标：检验第025代低换手市场广度机制能否改善第027代方向性冲击的交易效率。
+特征：第025代5项特征，加impact_asymmetry_20、downside_impact_share_20。
+对照：第025代、第027代。
+判定：要求综合得分不低于两者中较高者附近，同时换手率不能明显上升；不接受只靠2024年单年提升。
+
+1-036 精简压力与方向性冲击
+验证目标：验证第020代和第027代能否在机制互补的精简集合中协同，而不是重复堆叠。
+特征：market_breadth、market_dispersion、downside_freq_20、amihud_20、stress_breadth_alignment、liquidity_stress_gap、impact_asymmetry_20、downside_impact_share_20。
+对照：第020代、第027代、第029代。
+判定：必须同时比较三折均值、最差折和换手；如果仅综合得分上涨但最差折明显下降，不视为成功。
+
+1-037 风险调整方向性精简
+验证目标：对第030代做消融，确认市场状态、真实波幅、残差动量等变量中哪些是必要的。
+特征：market_breadth、market_dispersion、market_beta_60、idiosyncratic_volatility_20、downside_amihud_20、impact_asymmetry_20。
+对照：第030代。
+判定：若使用6项特征即可保持第030代大部分ICIR和综合得分，说明第030代可以进一步简化；若下降，记录被剔除变量的必要性。
+
+1-038 低换手风险冲击组合
+验证目标：检验第025代低换手广度特征与第030代风险调整冲击之间的最小组合是否更适合比赛交易约束。
+特征：market_breadth_mean_5、market_breadth_change_5、market_dispersion_mean_20、breadth_dispersion_alignment、market_beta_60、idiosyncratic_volatility_20、impact_asymmetry_20、downside_impact_share_20。
+对照：第025代、第030代。
+判定：重点看综合得分、换手率和最差折；若Rank IC略低但综合得分、最差折和换手同时改善，可列为实用候选。
+
+建议训练顺序
+第一批：1-031、1-032、1-033，先确认第027代机制来源。
+第二批：1-034、1-035，分别确认第020代和第025代的有效部分。
+第三批：1-036、1-037、1-038，验证精简组合和风险调整组合。
+
+停止规则
+任何候选若三折平均综合得分低于对照0.01以上，且最差折、Rank IC、ICIR均未改善，则停止继续扩展该方向。
+任何候选若只在2024诊断期提高、三折滚动验证没有提高，不认定为有效信息。
+任何候选若换手显著升高但Rank IC和ICIR没有同步提高，不保留。

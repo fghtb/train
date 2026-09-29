@@ -1,0 +1,44 @@
+{
+  "model_name": "model_002_technical_core",
+  "confirmation_token": "CONFIRM_MODEL_002",
+  "feature_mode": "technical",
+  "optimization_plan": {
+    "plan": "检验量价、波动率、均线偏离、成交活跃度和横截面排名等技术特征是否能提高预测能力。",
+    "change": "相对第一代只改变特征集合，LightGBM 参数保持一致，以隔离特征工程的影响。",
+    "next": "比较信号增益和换手成本；若换手率升高，优先增加正则化并降低树复杂度。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  }
+}

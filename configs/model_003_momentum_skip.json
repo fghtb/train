@@ -1,0 +1,56 @@
+{
+  "model_name": "model_003_momentum_skip",
+  "confirmation_token": "CONFIRM_MODEL_003",
+  "feature_mode": "technical_momentum_skip",
+  "optimization_plan": {
+    "plan": "参考两篇论文的中期相对强度研究，测试 120/240 日动量及跳过最近 5 个交易日的动量。",
+    "change": "在第二代技术特征上增加中期动量和横截面排名，LightGBM 参数保持一致。",
+    "next": "本代预测能力下降，不继续堆叠动量特征；转向技术特征模型的树复杂度和换手率控制。"
+  },
+  "research_references": [
+    {
+      "title": "Empirical Asset Pricing via Machine Learning",
+      "path": "D:\\competition\\OP-REVF200009.pdf",
+      "use": "momentum/liquidity/volatility signals, time-ordered validation, turnover-aware comparison"
+    },
+    {
+      "title": "Returns to Buying Winners and Selling Losers",
+      "path": "D:\\competition\\Test _Title_.pdf",
+      "use": "medium-term momentum with a five-trading-day skip as a feature hypothesis"
+    }
+  ],
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 63,
+    "max_depth": -1,
+    "min_child_samples": 200,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.0,
+    "reg_lambda": 10.0,
+    "colsample_bytree": 0.8,
+    "subsample": 0.8,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  }
+}

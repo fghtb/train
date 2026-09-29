@@ -1,0 +1,4 @@
+第020代研究候选：压力状态传导
+第018代综合稳定性最好，第017代2024诊断和超额收益较好但换手偏高。本代研究市场压力是否传导到个股下行风险和流动性冲击。
+保留market_median_return、market_breadth、market_dispersion、true_range_pct、atr_20、range_shock、amihud_20、amihud_20_rank、downside_vol_20、downside_freq_20、drawdown_20，并加入stress_breadth_alignment和liquidity_stress_gap。前者表示下行频率与市场下跌广度共同程度，后者表示流动性冲击在市场压力下的条件状态。
+不加入隔夜方向、日内形态和路径效率。只使用题目数据，滚动量只读取当前及历史记录，测试集只预测。

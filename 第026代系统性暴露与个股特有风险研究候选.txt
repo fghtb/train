@@ -1,0 +1,18 @@
+第026代 系统性暴露与个股特有风险 新机制候选
+研究假设：用题目样本的市场中位数收益估算滚动市场敏感度，拆分系统性风险暴露和个股残差风险。
+
+本代使用特征：
+- market_beta_60: 60期cov(stock_ret,market_median_return)/var(market_median_return)
+  金融逻辑：滚动市场敏感度刻画个股共同市场风险暴露，用于区分系统性与个股特有收益。
+  风险：市场中位数只是题目样本代理，不是正式指数；估计窗口和结构变化影响beta。
+- market_beta_change_20: market_beta_60[t]-market_beta_60[t-20]
+  金融逻辑：市场敏感度的近期变化检验个股系统性风险暴露是否正在迁移。
+  风险：滚动估计误差会叠加，不能解释为稳定结构性beta变化。
+- idiosyncratic_volatility_20: 20期std(stock_ret-market_beta_60×market_median_return)
+  金融逻辑：beta调整后的残差波动刻画无法由共同市场变化解释的个股风险。
+  风险：beta和市场代理误差都进入残差；高特有波动不保证高收益。
+- idiosyncratic_momentum_20: 20期sum(stock_ret-market_beta_60×market_median_return)
+  金融逻辑：beta调整后的个股残差累计变化检验个股特有信息的扩散或反转。
+  风险：市场beta估计误差会污染残差，趋势延续与反转方向需实证区分。
+
+统一训练方案：LightGBM回归，沿用项目固定模型参数；2018-01-02至2023-12-31进入滚动训练历史，2021、2022、2023三折分别早停和从零重训，三折平均综合得分为主判断依据；2024仅做诊断，测试期2025-01-02至2026-06-08只生成预测。每代独立目录和模型，各7次拟合，init_model=None。只读题目训练集.csv与测试集_X.csv。

@@ -1,0 +1,24 @@
+{
+  "protocol_id": "TOP10_LONG_LABEL_DIAGNOSTIC_V1",
+  "top_fraction": 0.1,
+  "annual_trading_days": 252,
+  "risk_free_annual_assumption": 0.02,
+  "one_way_cost_assumption": 0.0003,
+  "min_universe": 100,
+  "min_metric_observations": 20,
+  "position": "long_only_equal_weight",
+  "benchmark": "provided_current_eligible_universe_equal_weight_gross",
+  "eligibility": "flag_limit_up=0 and current open>0 and close>0 and vol>0",
+  "missing_return_policy": "select_before_labels_then_require_complete_top_and_benchmark_for_paired_metrics",
+  "cost_method": "one_way_cost_times_L1_target_weight_change_including_initial_purchase",
+  "terminal_liquidation": false,
+  "execution_interpretation": "provided_next_day_label_diagnostic_not_executable_close_fill_backtest",
+  "notes": [
+    "2%为固定情景假设，不代表实际国债利率；不下载任何外部数据。",
+    "万分之三为每买入或卖出一元的成本假设，不代表完整税费和滑点。",
+    "成本按目标权重变化估算，未模拟权重随价格漂移、成交冲击和涨跌停卖出限制。",
+    "缺失收益不补零；仅在组合及基准全部成分的收益可观测时计算配对日指标。",
+    "存在缺失日时，年化、夏普和IR仅为有效样本诊断；全年复利收益与最大回撤不输出数值。",
+    "Alpha/Beta为相对提供样本基准的历史单因子回归诊断，不能证明纯粹选股能力。"
+  ]
+}

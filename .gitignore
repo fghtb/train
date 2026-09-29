@@ -1,0 +1,24 @@
+# Raw competition data and generated artifacts
+data/
+models/
+runs/
+logs/
+reports/
+_transaction/
+_qa*/
+__pycache__/
+*.pyc
+*.pyo
+*.csv
+
+# Rendered and generated document outputs
+*.docx
+模型训练总报告*
+模型筛选报告*
+金融逻辑特征白皮书.txt
+
+# Local editor and OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

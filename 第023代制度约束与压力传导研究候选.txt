@@ -1,0 +1,4 @@
+第023代研究候选：制度约束与压力传导
+涨跌停制度可能改变压力状态中的订单失衡和流动性退出。本代研究制度约束是否调节市场压力和价格冲击。
+特征：涨跌停标记、market_breadth、market_dispersion、true_range_pct、range_shock、amihud_20、downside_freq_20、limit_stress_alignment、stress_dispersion_alignment。
+主动剔除市场中位数收益、回撤、隔夜方向、日内形态和路径效率。只使用题目数据，测试集只预测。

@@ -1,0 +1,39 @@
+﻿滚动验证方案与待确认参数
+状态：代码已配置，尚未开始真实训练。
+方案：三折历史扩展窗口，加2024最终诊断；2025-01-02至2026-06-08仅为比赛预测区间。
+每个候选七次独立拟合；两候选分别确认。内层早停选轮后重训，不加载任何旧模型。
+2024已参与旧代模型选择，因此不是全新盲测；新流程不使用2024标签早停。
+fold_2021：内层训练 20180102—20200630；早停 20200701—20201231；从零重训 20180102—20201231；评估 20210101—20211231。
+fold_2022：内层训练 20180102—20210630；早停 20210701—20211231；从零重训 20180102—20211231；评估 20220101—20221231。
+fold_2023：内层训练 20180102—20220630；早停 20220701—20221231；从零重训 20180102—20221231；评估 20230101—20231231。
+所有训练阶段按标签兑现日期清除跨边界标签；评估期末跨出本期的标签不计分。
+最终训练：2018-01-02至2023-12-31的合规样本；轮数取三折内层最佳轮数中位数；2024只作最终诊断。
+模型比较：同协议三折综合得分均值为主要依据，同时检查最差折、ICIR、月度/季度表现和换手率；不混排不同协议结果。
+参数表：
+objective：regression
+n_estimators：3000
+learning_rate：0.03
+num_leaves：63
+max_depth：-1
+min_child_samples：200
+min_split_gain：0.0
+reg_alpha：0.0
+reg_lambda：10.0
+colsample_bytree：0.8
+subsample：0.8
+subsample_freq：1
+n_jobs：-1
+force_col_wise：True
+random_state：42
+verbosity：-1
+early_stopping_rounds：100
+label_horizon_trading_days：1
+test_usage：历史评估和参数冻结后才读取测试X，不读取测试Y。
+候选：model_004_raw_walkforward；特征模式：raw。
+配置：D:\competition\train\configs\model_004_raw_walkforward.json
+确认口令：CONFIRM_MODEL_004_WALKFORWARD；只授权这一候选的七次拟合。
+候选：model_005_technical_walkforward；特征模式：technical。
+配置：D:\competition\train\configs\model_005_technical_walkforward.json
+确认口令：CONFIRM_MODEL_005_WALKFORWARD；只授权这一候选的七次拟合。
+旧模型、预测文件和原始数据均保留。每个新候选及每折的模型、参数、指标、边界剔除记录保存到独立运行目录。
+累计报告同时更新Markdown和UTF-8 BOM纯文本TXT。此计划没有声称新方法已提高成绩。

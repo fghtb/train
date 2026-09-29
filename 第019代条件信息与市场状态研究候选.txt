@@ -1,0 +1,4 @@
+第019代研究候选：条件信息与市场状态
+第009代隔夜信息方向Rank IC强，第012代市场状态方向ICIR和低换手较好，第016代仍有较强Rank IC但收益不足。本代研究隔夜信息在市场状态中的条件一致性。
+保留gap_1、oc_return、market_median_return、market_breadth、market_dispersion、residual_return_1、residual_momentum_20、market_relative_volatility，并加入gap_market_alignment和shock_market_alignment。前者表示跳空方向与市场上涨广度一致程度，后者表示异常价格冲击与市场分化的条件状态。
+不加入下行回撤、Amihud、日内形态和路径效率。只使用题目数据，滚动量只读取当前及历史记录，测试集只预测。

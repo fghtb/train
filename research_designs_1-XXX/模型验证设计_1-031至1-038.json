@@ -1,0 +1,34 @@
+{
+  "status": "designed_not_trained",
+  "research_code_prefix": "1-",
+  "data_policy": "题目提供数据，不使用外部数据和未来标签",
+  "protocol": "WF2021_2023_INNER_H2_PURGE1_V1",
+  "diagnostic_year": 2024,
+  "test_range": [20250102, 20260608],
+  "common_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 31,
+    "min_child_samples": 300,
+    "reg_alpha": 0.1,
+    "reg_lambda": 20.0,
+    "colsample_bytree": 0.9,
+    "subsample": 0.9,
+    "early_stopping_rounds": 100,
+    "random_state": 42
+  },
+  "primary_metric": "three_fold_mean_composite_score",
+  "secondary_metrics": ["worst_fold_score", "fold_score_std", "rank_ic", "icir", "annual_top1_excess", "turnover"],
+  "models": [
+    {"code": "1-031", "name": "方向性冲击去制度标记", "features": ["upside_amihud_20", "downside_amihud_20", "impact_asymmetry_20", "downside_impact_share_20"], "control": "027", "purpose": "检验涨跌停标记贡献"},
+    {"code": "1-032", "name": "方向性冲击市场状态", "features": ["upside_amihud_20", "downside_amihud_20", "impact_asymmetry_20", "downside_impact_share_20", "market_median_return", "market_breadth", "market_dispersion"], "control": "027", "purpose": "检验市场条件调节"},
+    {"code": "1-033", "name": "方向性冲击风险调整", "features": ["upside_amihud_20", "downside_amihud_20", "impact_asymmetry_20", "downside_impact_share_20", "market_beta_60", "idiosyncratic_volatility_20", "idiosyncratic_momentum_20"], "control": "027/030", "purpose": "检验风险调整后的独立信息"},
+    {"code": "1-034", "name": "市场压力传导精简", "features": ["market_breadth", "market_dispersion", "downside_freq_20", "amihud_20", "stress_breadth_alignment", "liquidity_stress_gap"], "control": "020", "purpose": "检验压力交互的核心作用"},
+    {"code": "1-035", "name": "广度分化与方向性冲击", "features": ["market_breadth_mean_5", "market_breadth_mean_20", "market_breadth_change_5", "market_dispersion_mean_20", "breadth_dispersion_alignment", "impact_asymmetry_20", "downside_impact_share_20"], "control": "025/027", "purpose": "检验低换手机制与冲击机制互补"},
+    {"code": "1-036", "name": "精简压力与方向性冲击", "features": ["market_breadth", "market_dispersion", "downside_freq_20", "amihud_20", "stress_breadth_alignment", "liquidity_stress_gap", "impact_asymmetry_20", "downside_impact_share_20"], "control": "020/027/029", "purpose": "验证精简协同而非特征堆叠"},
+    {"code": "1-037", "name": "风险调整方向性精简", "features": ["market_breadth", "market_dispersion", "market_beta_60", "idiosyncratic_volatility_20", "downside_amihud_20", "impact_asymmetry_20"], "control": "030", "purpose": "确认第030代必要变量"},
+    {"code": "1-038", "name": "低换手风险冲击组合", "features": ["market_breadth_mean_5", "market_breadth_change_5", "market_dispersion_mean_20", "breadth_dispersion_alignment", "market_beta_60", "idiosyncratic_volatility_20", "impact_asymmetry_20", "downside_impact_share_20"], "control": "025/030", "purpose": "检验低换手与风险调整冲击的最小组合"}
+  ]
+}
+

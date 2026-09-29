@@ -1,0 +1,131 @@
+{
+  "model_name": "model_016_overnight_market_state_financial_v1",
+  "confirmation_token": "CONFIRM_MODEL_016_NEW_LOGIC",
+  "feature_mode": "overnight_market_state",
+  "optimization_plan": {
+    "plan": "检验隔夜信息和日内压力在市场共同方向、广度、分化度下是否呈现不同的个股相对收益。",
+    "change": "保留gap_1、oc_return与市场中位数收益、市场广度、市场分化度、个股残差收益、残差动量和相对波动；不加入流动性冲击，避免把两个机制混在一起。",
+    "next": "采用相同三折滚动协议比较三折平均综合得分、最差折、Rank IC、ICIR、年化超额、换手和2024诊断，不预设方向。"
+  },
+  "data": {
+    "data_dir": "D:\\competition\\赛题五数据",
+    "train_path": "D:\\competition\\赛题五数据\\训练集.csv",
+    "test_path": "D:\\competition\\赛题五数据\\测试集_X.csv"
+  },
+  "split": {
+    "train_start": 20180102,
+    "train_end": 20231231,
+    "valid_start": 20240101,
+    "valid_end": 20241231,
+    "test_start": 20250102,
+    "test_end": 20260608
+  },
+  "model_params": {
+    "objective": "regression",
+    "n_estimators": 3000,
+    "learning_rate": 0.03,
+    "num_leaves": 31,
+    "max_depth": -1,
+    "min_child_samples": 300,
+    "min_split_gain": 0.0,
+    "reg_alpha": 0.1,
+    "reg_lambda": 20.0,
+    "colsample_bytree": 0.9,
+    "subsample": 0.9,
+    "subsample_freq": 1,
+    "n_jobs": -1,
+    "force_col_wise": true,
+    "random_state": 42,
+    "verbosity": -1
+  },
+  "save": {
+    "sample_rows": 1000
+  },
+  "evaluation": {
+    "method": "expanding_walk_forward",
+    "protocol_id": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "folds": [
+      {
+        "name": "fold_2021",
+        "fit_start": 20180102,
+        "inner_fit_end": 20200630,
+        "early_stop_start": 20200701,
+        "early_stop_end": 20201231,
+        "refit_end": 20201231,
+        "assessment_start": 20210101,
+        "assessment_end": 20211231
+      },
+      {
+        "name": "fold_2022",
+        "fit_start": 20180102,
+        "inner_fit_end": 20210630,
+        "early_stop_start": 20210701,
+        "early_stop_end": 20211231,
+        "refit_end": 20211231,
+        "assessment_start": 20220101,
+        "assessment_end": 20221231
+      },
+      {
+        "name": "fold_2023",
+        "fit_start": 20180102,
+        "inner_fit_end": 20220630,
+        "early_stop_start": 20220701,
+        "early_stop_end": 20221231,
+        "refit_end": 20221231,
+        "assessment_start": 20230101,
+        "assessment_end": 20231231
+      }
+    ],
+    "early_stopping_rounds": 100,
+    "label_horizon_trading_days": 1,
+    "boundary_policy": "label_date_before_next_stage",
+    "final_rounds_rule": "median_inner_best_iteration",
+    "final_comparison_year": 2024,
+    "max_model_fits": 7,
+    "test_usage": "prediction_only_after_cv_and_2024_assessment"
+  },
+  "financial_logic": {
+    "version": "FINANCIAL_LOGIC_FIRST_V1",
+    "registry_fingerprint": "f4e3bd78bb65171136290c18954a72ad2d236cd2f44bf8817a166075895077a2",
+    "allowed_features": [
+      "flag_limit_up",
+      "flag_limit_down",
+      "gap_1",
+      "oc_return",
+      "market_median_return",
+      "market_breadth",
+      "market_dispersion",
+      "residual_return_1",
+      "residual_momentum_20",
+      "market_relative_volatility"
+    ],
+    "excluded_features": [
+      "open",
+      "high",
+      "low",
+      "close",
+      "vol",
+      "amount"
+    ],
+    "display_logic_before_confirmation": true
+  },
+  "comparison_plan": {
+    "historical_reference": "连续三代独立机制研究；不加载前代模型，不以单一指标预设结果。",
+    "candidate_protocol": "WF2021_2023_INNER_H2_PURGE1_V1",
+    "selection_years": [
+      2021,
+      2022,
+      2023
+    ],
+    "diagnostic_year": 2024,
+    "test_usage": "仅按题目测试集X生成预测，不读取测试标签。",
+    "primary_decision_metric": "三折平均综合得分；同时检查最差折、Rank IC、ICIR、年化超额、换手和并列预测。"
+  },
+  "research_references": [
+    {
+      "title": "第016代隔夜信息与市场状态研究候选",
+      "path": "D:\\competition\\train\\第016代隔夜信息与市场状态研究候选.txt",
+      "use": "检验隔夜信息和日内压力在市场共同方向、广度、分化度下是否呈现不同的个股相对收益。"
+    }
+  ]
+}
